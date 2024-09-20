@@ -5,13 +5,27 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backIcon, doubleSaveIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
+import Mapbox from '@rnmapbox/maps';
+
+Mapbox.setAccessToken(
+  'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
+);
 
 const Home = () => {
   useStatusBar('white');
   return (
     <SafeAreaView style={styles.container}>
       <Header />
+      <MapRender />
     </SafeAreaView>
+  );
+};
+
+const MapRender: React.FC = () => {
+  return (
+    <View style={styles.mapContainer}>
+      <Mapbox.MapView style={styles.map} />
+    </View>
   );
 };
 
@@ -36,5 +50,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: vh(2),
+  },
+  mapContainer: {
+    flex: 1,
+    overflow: 'hidden',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  map: {
+    flex: 1,
   },
 });
