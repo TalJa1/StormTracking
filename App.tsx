@@ -1,117 +1,103 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {vh, vw} from './services/styleSheet';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {chartIcon, homeIcon, settingIcon} from './assets/svgXml';
+import Home from './views/bottomNavigator/Home';
+import Chart from './views/bottomNavigator/Chart';
+import Setting from './views/bottomNavigator/Setting';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const App = () => {
+  const TabNavigator = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarActiveTintColor: '#293056',
+          tabBarInactiveTintColor: '#717BBC',
+          tabBarShowLabel: true,
+          tabBarStyle: styles.tabBar,
+          tabBarLabelStyle: styles.tabBarLabel,
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return <View>{homeIcon(iconSize, iconSize, color)}</View>;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Chart"
+          component={Chart}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return <View>{chartIcon(iconSize, iconSize, color)}</View>;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Setting"
+          component={Setting}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, focused}) => {
+              const iconSize = focused ? vw(7) : vw(6);
+              return <View>{settingIcon(iconSize, iconSize, color)}</View>;
+            },
+          }}
+        />
+      </Tab.Navigator>
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      {/* Main || Login */}
+      <Stack.Navigator initialRouteName="Login">
+        {/* Main layout with 3 bottom tabs */}
+        <Stack.Screen
+          name="Main"
+          component={TabNavigator}
+          options={{headerShown: false}}
+        />
+        {/* end here */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  tabBar: {
+    height: vh(8),
+    borderRadius: 12,
+    paddingVertical: vh(1),
+    position: 'absolute',
+    bottom: vh(2),
+    left: vw(5),
+    right: vw(5),
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingBottom: vh(1),
   },
 });
 
