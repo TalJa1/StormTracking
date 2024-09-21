@@ -13,6 +13,7 @@ import {backArrowIcon, searchingIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {LocationData} from '../../services/renderData';
 
 const ListLocation = () => {
   useStatusBar('white');
@@ -21,8 +22,30 @@ const ListLocation = () => {
       <Header />
       <ScrollView>
         <SearchBar />
+        <MainContent />
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const MainContent: React.FC = () => {
+  return (
+    <View style={{paddingVertical: vh(1), rowGap: vh(1)}}>
+      <View style={styles.mainContainer}>
+        <Text style={styles.mainTitle}>Đã thêm</Text>
+        {LocationData.map((item, index) => {
+          return (
+            <View key={index} style={styles.blockLocation}>
+              <View>
+                <Text style={styles.mainTitle}>{item.name}</Text>
+                <Text style={styles.mainDes}>{item.description}</Text>
+              </View>
+              <Text style={styles.degree}>{item.temperature}°</Text>
+            </View>
+          );
+        })}
+      </View>
+    </View>
   );
 };
 
@@ -85,5 +108,32 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     color: '#000',
+  },
+  mainContainer: {
+    paddingHorizontal: vw(5),
+    rowGap: vh(1.5),
+  },
+  mainTitle: {
+    color: '#1D2939',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  degree: {
+    color: '#4E5BA6',
+    fontSize: 32,
+    fontWeight: '600',
+  },
+  mainDes: {
+    color: '#667085',
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  blockLocation: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#E4E7EC',
+    padding: 8,
+    borderRadius: 8,
+    justifyContent: 'space-between',
   },
 });
