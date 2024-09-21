@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
+  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backArrowIcon, searchingIcon} from '../../assets/svgXml';
@@ -15,6 +16,8 @@ import {vh, vw} from '../../services/styleSheet';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AdditionLocaiton, LocationData} from '../../services/renderData';
+import {MapLocation} from '../../services/typeProps';
+import {loadData, saveData} from '../../services/storage';
 
 const ListLocation = () => {
   useStatusBar('white');
@@ -30,11 +33,52 @@ const ListLocation = () => {
 };
 
 const MainContent: React.FC = () => {
+  const [mainData, setMainData] = useState<MapLocation[]>(LocationData);
+  const [addData, setAddData] = useState<MapLocation[]>(AdditionLocaiton);
+  const [loading, setLoading] = useState(true);
+
+  const fetchMainData = async () => {
+    try {
+      const data = await loadData<MapLocation[]>('listLocationStorage');
+      setMainData(data);
+    } catch (error) {
+      saveData('listLocationStorage', LocationData);
+    }
+  };
+
+  const fetchAddData = async () => {
+    try {
+      const data = await loadData<MapLocation[]>('additionLocationStorage');
+      setAddData(data);
+    } catch (error) {
+      saveData('additionLocationStorage', AdditionLocaiton);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchMainData();
+      await fetchAddData();
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{paddingVertical: vh(1), rowGap: vh(2)}}>
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>Đã thêm</Text>
-        {LocationData.map((item, index) => {
+        {mainData.map((item, index) => {
           return (
             <View key={index} style={styles.blockLocation}>
               <View>
@@ -48,7 +92,7 @@ const MainContent: React.FC = () => {
       </View>
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>Gợi ý</Text>
-        {AdditionLocaiton.map((item, index) => {
+        {addData.map((item, index) => {
           return (
             <View key={index} style={styles.blockLocation}>
               <View>
@@ -157,7 +201,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   addBtn: {
-    backgroundColor: '#4E5BA6',
+    backgroundColor: '#293056',
     borderRadius: 8,
     paddingHorizontal: vw(4),
     paddingVertical: vh(1),
@@ -167,5 +211,10 @@ const styles = StyleSheet.create({
     color: '#FCFCFD',
     fontSize: 14,
     fontWeight: '600',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
