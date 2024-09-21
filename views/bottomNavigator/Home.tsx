@@ -1,13 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   Alert,
+  Animated,
   Image,
+  PanResponder,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
@@ -49,6 +51,31 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
     },
   );
 
+  const animatedHeight = useRef(new Animated.Value(vh(23))).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderMove: (evt, gestureState) => {
+        if (gestureState.dy > 0) {
+          // Sliding down
+          Animated.timing(animatedHeight, {
+            toValue: vh(10),
+            duration: 300,
+            useNativeDriver: false,
+          }).start();
+        } else {
+          // Sliding up
+          Animated.timing(animatedHeight, {
+            toValue: vh(23),
+            duration: 300,
+            useNativeDriver: false,
+          }).start();
+        }
+      },
+    }),
+  ).current;
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
@@ -69,7 +96,9 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
           ]}
         />
       </Mapbox.MapView>
-      <View style={styles.inforContainer}>
+      <Animated.View
+        style={[styles.inforContainer, {height: animatedHeight}]}
+        {...panResponder.panHandlers}>
         <View style={styles.sliderBar} />
         <View>
           <Text style={styles.inforTitle}>Dự báo bão cấp 3</Text>
@@ -102,7 +131,7 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
             value="75%, thúc đẩy mưa lớn và dông"
           />
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -190,6 +219,7 @@ const styles = StyleSheet.create({
     paddingVertical: vh(1),
     borderRadius: 12,
     rowGap: vh(1),
+    overflow: 'hidden',
   },
   inforTitle: {
     fontSize: 16,
