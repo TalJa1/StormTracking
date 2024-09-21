@@ -17,3 +17,7 @@ export interface MapLocation {
   long: number;
   lad: number;
 }
+
+export interface HomeHeader {
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}

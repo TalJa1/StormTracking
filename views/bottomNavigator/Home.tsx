@@ -2,6 +2,7 @@
 import {
   Animated,
   Image,
+  Modal,
   PanResponder,
   StyleSheet,
   Text,
@@ -11,11 +12,18 @@ import {
 import React, {useCallback, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
+import {
+  backIcon,
+  bookIcon,
+  menuIcon,
+  nextIcon,
+  popUpCancelIcon,
+} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
 import {
   DetailInforInterface,
+  HomeHeader,
   MapInterface,
   MapLocation,
 } from '../../services/typeProps';
@@ -23,6 +31,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {loadData, saveData} from '../../services/storage';
 import {LocationData} from '../../services/renderData';
+import PopUpComponent from '../../components/home/PopUpComponent';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -32,6 +41,7 @@ const Home = () => {
   useStatusBar('white');
   const [listLocation, setListLocation] = useState<MapLocation[]>(LocationData);
   const [renderIndex, setRenderIndex] = useState<number>(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -50,12 +60,36 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      <Header setModalVisible={setModalVisible} />
       <MapRender
         tabLocation={listLocation[renderIndex]}
         setRenderIndex={setRenderIndex}
         maxIndex={listLocation.length}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottomWidth: 1,
+                borderBottomColor: '#E4E7EC',
+                paddingBottom: vh(1),
+              }}>
+              <Text style={styles.popUpText}>Các cấp độ của bão</Text>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                {popUpCancelIcon(vw(7), vw(7))}
+              </TouchableOpacity>
+            </View>
+            <PopUpComponent />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -170,11 +204,13 @@ const DetailInforRender: React.FC<DetailInforInterface> = ({
     </View>
   );
 };
-const Header: React.FC = () => {
+const Header: React.FC<HomeHeader> = ({setModalVisible}) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <View style={styles.headercontainer}>
-      <TouchableOpacity>{bookIcon(vw(7), vw(7), '#98A2B3')}</TouchableOpacity>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        {bookIcon(vw(7), vw(7), '#98A2B3')}
+      </TouchableOpacity>
       <Text style={{color: '#4E5BA6', fontSize: 20, fontWeight: '600'}}>
         Storm Forecast
       </Text>
@@ -281,5 +317,27 @@ const styles = StyleSheet.create({
     width: vw(5),
     height: vw(5),
     resizeMode: 'contain',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  modalContainer: {
+    width: vw(90),
+    height: vh(90),
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: vw(5),
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  popUpText: {
+    color: '#1D2939',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
