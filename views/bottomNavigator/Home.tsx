@@ -1,12 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
-import {MapInterface} from '../../services/typeProps';
+import {DetailInforInterface, MapInterface} from '../../services/typeProps';
 import Geolocation from '@react-native-community/geolocation';
 
 Mapbox.setAccessToken(
@@ -62,6 +69,56 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
           ]}
         />
       </Mapbox.MapView>
+      <View style={styles.inforContainer}>
+        <View style={styles.sliderBar} />
+        <View>
+          <Text style={styles.inforTitle}>Dự báo bão cấp 3</Text>
+          <Text style={styles.inforSub}>
+            Cơn bão Yagi đang di chuyển hướng Tây Bắc với tốc độ gió 115 km/h
+            (cấp 3), áp suất tại tâm bão 978 hPa.{' '}
+            <Text style={styles.inforSubBold}>Cảnh báo</Text> Người dân ven biển
+            cần chuẩn bị di tản và theo dõi các hướng dẫn từ cơ quan chức năng.
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-between',
+          }}>
+          <DetailInforRender
+            icon={require('../../assets/home/wind.png')}
+            title="Tốc độ gió"
+            value="111-130 km/h, giật tới 140 km/h"
+          />
+          <DetailInforRender
+            icon={require('../../assets/home/rain.png')}
+            title="Lượng mưa"
+            value="100-150mm/24h, nguy cơ lũ lụt"
+          />
+          <DetailInforRender
+            icon={require('../../assets/home/humidity.png')}
+            title="Độ ẩm"
+            value="75%, thúc đẩy mưa lớn và dông"
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const DetailInforRender: React.FC<DetailInforInterface> = ({
+  icon,
+  title,
+  value,
+}) => {
+  return (
+    <View style={{width: '32%'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Image style={styles.detailInforImg} source={icon} />
+        <Text style={styles.detailInfoTitle}>{title}</Text>
+      </View>
+      <Text style={styles.detailInfodata}>{value}</Text>
     </View>
   );
 };
@@ -121,5 +178,54 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: vw(1),
     borderRadius: vw(20),
+  },
+  inforContainer: {
+    position: 'absolute',
+    bottom: vh(10),
+    left: vw(5),
+    right: vw(5),
+    backgroundColor: 'white',
+    opacity: 0.9,
+    paddingHorizontal: vw(5),
+    paddingVertical: vh(1),
+    borderRadius: 12,
+    rowGap: vh(1),
+  },
+  inforTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4E5BA6',
+  },
+  sliderBar: {
+    backgroundColor: '#98A2B3',
+    height: vw(1),
+    width: '20%',
+    borderRadius: vw(1),
+    alignSelf: 'center',
+  },
+  inforSub: {
+    color: '#475467',
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  inforSubBold: {
+    fontWeight: '700',
+    fontSize: 12,
+    color: '#F04438',
+  },
+  detailInfoTitle: {
+    color: '#4E5BA6',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  detailInfodata: {
+    color: '#475467',
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  detailInforImg: {
+    width: vw(5),
+    height: vw(5),
+    resizeMode: 'contain',
   },
 });
