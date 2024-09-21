@@ -3,10 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {bookIcon, menuIcon} from '../../assets/svgXml';
+import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
-import {LocationTabInterface} from '../../services/typeProps';
+import {MapInterface} from '../../services/typeProps';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -19,19 +19,23 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <LocationTab setTabLocation={setTabLocation} tabLocation={tabLocation} />
-      <MapRender />
+      <MapRender tabLocation={tabLocation} setTabLocation={setTabLocation} />
     </SafeAreaView>
   );
 };
 
-const LocationTab: React.FC<LocationTabInterface> = () => {
-  return <View style={styles.locationContainer}></View>;
-};
-
-const MapRender: React.FC = () => {
+const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
   return (
     <View style={styles.mapContainer}>
+      <View style={styles.locationContainer}>
+        <TouchableOpacity style={styles.mapTabBtn}>
+          {backIcon(vw(7), vw(7))}
+        </TouchableOpacity>
+        <Text style={styles.mapTabTxt}>{tabLocation}</Text>
+        <TouchableOpacity style={styles.mapTabBtn}>
+          {nextIcon(vw(7), vw(7))}
+        </TouchableOpacity>
+      </View>
       <Mapbox.MapView style={styles.map} />
     </View>
   );
@@ -69,6 +73,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   locationContainer: {
+    zIndex: 2,
     position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF99',
+    alignItems: 'center',
+    paddingVertical: vh(2),
+    top: vh(1),
+    left: vw(5),
+    right: vw(5),
+    borderRadius: 8,
+    paddingHorizontal: vw(5),
+  },
+  mapTabTxt: {
+    color: '#4E5BA6',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  mapTabBtn: {
+    backgroundColor: 'white',
+    padding: vw(1),
+    borderRadius: vw(20),
   },
 });
