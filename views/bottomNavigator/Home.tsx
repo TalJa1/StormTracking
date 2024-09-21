@@ -146,7 +146,7 @@ const Header: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <View style={styles.headercontainer}>
-      {bookIcon(vw(7), vw(7), '#98A2B3')}
+      <TouchableOpacity>{bookIcon(vw(7), vw(7), '#98A2B3')}</TouchableOpacity>
       <Text style={{color: '#4E5BA6', fontSize: 20, fontWeight: '600'}}>
         Storm Forecast
       </Text>
