@@ -77,9 +77,10 @@ const Setting = () => {
                       value={0.5}
                       minimumTrackTintColor="#3E4784"
                       maximumTrackTintColor="#E4E7EC"
+                      thumbTintColor="#3E4784"
                     />
                   ) : (
-                                        <ToggleSwitch
+                    <ToggleSwitch
                       isOn={toggleStates[index]}
                       size="small"
                       onToggle={() => onToggle(index)}
