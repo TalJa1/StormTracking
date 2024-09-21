@@ -74,6 +74,18 @@ const MainContent: React.FC = () => {
     );
   }
 
+  const handleAdd = async (index: number) => {
+    const itemToAdd = addData[index];
+    const updatedMainData = [...mainData, itemToAdd];
+    const updatedAddData = addData.filter((_, i) => i !== index);
+
+    setMainData(updatedMainData);
+    setAddData(updatedAddData);
+
+    await saveData('listLocationStorage', updatedMainData);
+    await saveData('additionLocationStorage', updatedAddData);
+  };
+
   return (
     <View style={{paddingVertical: vh(1), rowGap: vh(2)}}>
       <View style={styles.mainContainer}>
@@ -101,7 +113,9 @@ const MainContent: React.FC = () => {
               </View>
               <View style={{flexDirection: 'row', columnGap: vw(2)}}>
                 <Text style={styles.degree}>{item.temperature}°</Text>
-                <TouchableOpacity style={styles.addBtn}>
+                <TouchableOpacity
+                  onPress={() => handleAdd(index)}
+                  style={styles.addBtn}>
                   <Text style={styles.addBtnTxt}>+ Thêm</Text>
                 </TouchableOpacity>
               </View>
