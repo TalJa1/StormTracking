@@ -1,6 +1,7 @@
 export interface MapInterface {
   tabLocation: MapLocation;
-  setTabLocation: React.Dispatch<React.SetStateAction<number>>;
+  setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
+  maxIndex: number;
 }
 
 export interface DetailInforInterface {

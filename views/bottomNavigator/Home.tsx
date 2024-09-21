@@ -49,12 +49,20 @@ const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <MapRender tabLocation={listLocation[renderIndex]} setTabLocation={setRenderIndex} />
+      <MapRender
+        tabLocation={listLocation[renderIndex]}
+        setRenderIndex={setRenderIndex}
+        maxIndex={listLocation.length}
+      />
     </SafeAreaView>
   );
 };
 
-const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
+const MapRender: React.FC<MapInterface> = ({
+  tabLocation,
+  maxIndex,
+  setRenderIndex,
+}) => {
   const animatedHeight = useRef(new Animated.Value(vh(23))).current;
 
   const panResponder = useRef(
@@ -80,14 +88,22 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
     }),
   ).current;
 
+  const handleBackPress = () => {
+    setRenderIndex(prevIndex => (prevIndex > 0 ? prevIndex - 1 : maxIndex - 1));
+  };
+
+  const handleNextPress = () => {
+    setRenderIndex(prevIndex => (prevIndex < maxIndex - 1 ? prevIndex + 1 : 0));
+  };
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
-        <TouchableOpacity style={styles.mapTabBtn}>
+        <TouchableOpacity style={styles.mapTabBtn} onPress={handleBackPress}>
           {backIcon(vw(7), vw(7))}
         </TouchableOpacity>
         <Text style={styles.mapTabTxt}>{tabLocation.name}</Text>
-        <TouchableOpacity style={styles.mapTabBtn}>
+        <TouchableOpacity style={styles.mapTabBtn} onPress={handleNextPress}>
           {nextIcon(vw(7), vw(7))}
         </TouchableOpacity>
       </View>
