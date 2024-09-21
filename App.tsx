@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   tabBar: {
     height: vh(8),
     borderRadius: 12,
-    paddingVertical: vh(1),
     position: 'absolute',
     bottom: vh(1),
     left: vw(5),
@@ -93,6 +92,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3.84,
     elevation: 5,
+    opacity: 0.9,
   },
   tabBarLabel: {
     fontSize: 12,
