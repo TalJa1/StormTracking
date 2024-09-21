@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
@@ -21,6 +21,8 @@ import {
 } from '../../services/typeProps';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {loadData, saveData} from '../../services/storage';
+import {LocationData} from '../../services/renderData';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -28,18 +30,26 @@ Mapbox.setAccessToken(
 
 const Home = () => {
   useStatusBar('white');
-  const [tabLocation, setTabLocation] = useState<MapLocation>({
-    name: 'Hanoi',
-    description: 'Mưa rào',
-    temperature: 28,
-    long: 105.804817,
-    lad: 21.028511,
-  });
+  const [listLocation, setListLocation] = useState<MapLocation[]>(LocationData);
+  const [renderIndex, setRenderIndex] = useState<number>(0);
+
+  const fetchData = async () => {
+    try {
+      const data = await loadData<MapLocation[]>('listLocationStorage');
+      setListLocation(data);
+    } catch (error) {
+      saveData('listLocationStorage', LocationData);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <MapRender tabLocation={tabLocation} setTabLocation={setTabLocation} />
+      <MapRender tabLocation={listLocation[renderIndex]} setTabLocation={setRenderIndex} />
     </SafeAreaView>
   );
 };

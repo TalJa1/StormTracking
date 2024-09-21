@@ -1,6 +1,6 @@
 export interface MapInterface {
   tabLocation: MapLocation;
-  setTabLocation: React.Dispatch<React.SetStateAction<MapLocation>>;
+  setTabLocation: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface DetailInforInterface {
