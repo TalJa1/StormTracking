@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
@@ -7,6 +7,7 @@ import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
 import {MapInterface} from '../../services/typeProps';
+import Geolocation from '@react-native-community/geolocation';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -25,6 +26,22 @@ const Home = () => {
 };
 
 const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  Geolocation.getCurrentPosition(
+    info =>
+      setCurrentLocation({
+        latitude: info.coords.latitude,
+        longitude: info.coords.longitude,
+      }),
+    error => {
+      Alert.alert('Error', `Please enable location service ${error}`);
+    },
+  );
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
@@ -36,7 +53,15 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
           {nextIcon(vw(7), vw(7))}
         </TouchableOpacity>
       </View>
-      <Mapbox.MapView style={styles.map} />
+      <Mapbox.MapView style={styles.map}>
+        <Mapbox.Camera
+          zoomLevel={5}
+          centerCoordinate={[
+            currentLocation.longitude,
+            currentLocation.latitude,
+          ]}
+        />
+      </Mapbox.MapView>
     </View>
   );
 };
