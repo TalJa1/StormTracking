@@ -21,3 +21,13 @@ export interface MapLocation {
 export interface HomeHeader {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export interface RenderLayoutItem {
+  icon: JSX.Element;
+  title: string;
+}
+
+export interface RenderLayoutInterface {
+  title: string;
+  renderData: RenderLayoutItem[];
+}

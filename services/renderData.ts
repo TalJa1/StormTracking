@@ -1,3 +1,17 @@
+import {
+  aboutUsIcon,
+  callIcon,
+  darkModeIcon,
+  doubleSaveIcon,
+  FAQsIcon,
+  followIcon,
+  inforIcon,
+  noiceIcon,
+  notiIcon,
+  RateIcon,
+} from '../assets/svgXml';
+import {vw} from './styleSheet';
+
 export const LocationData = [
   {
     name: 'Hanoi',
@@ -213,5 +227,57 @@ export const StormLevelData = [
       'Chuẩn bị đồ dùng cần thiết: Đảm bảo có đủ nước uống, thực phẩm, và các vật dụng cần thiết khác.',
       'Theo dõi thông tin: Liên tục cập nhật thông tin từ cơ quan chức năng.',
     ],
+  },
+];
+
+export const Self = [
+  {
+    icon: inforIcon(vw(7), vw(7)),
+    title: 'Thông tin tài khoản',
+  },
+  {
+    icon: doubleSaveIcon(vw(7), vw(7)),
+    title: 'Bài viết đã lưu',
+  },
+];
+
+export const SystemSetting = [
+  {
+    icon: darkModeIcon(vw(7), vw(7)),
+    title: 'Chế độ tối',
+  },
+  {
+    icon: notiIcon(vw(7), vw(7)),
+    title: 'Thông báo',
+  },
+  {
+    icon: noiceIcon(vw(7), vw(7)),
+    title: 'Âm thanh',
+  },
+];
+
+export const HelpCenter = [
+  {
+    icon: aboutUsIcon(vw(7), vw(7)),
+    title: 'Chúng tôi là ai',
+  },
+  {
+    icon: FAQsIcon(vw(7), vw(7)),
+    title: 'FAQs',
+  },
+  {
+    icon: callIcon(vw(7), vw(7)),
+    title: 'Liên hệ',
+  },
+];
+
+export const OtherInfor = [
+  {
+    icon: followIcon(vw(7), vw(7)),
+    title: 'Theo dõi',
+  },
+  {
+    icon: RateIcon(vw(7), vw(7)),
+    title: 'Đánh giá',
   },
 ];
