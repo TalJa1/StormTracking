@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {bookIcon, menuIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
+import {LocationTabInterface} from '../../services/typeProps';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -13,12 +14,19 @@ Mapbox.setAccessToken(
 
 const Home = () => {
   useStatusBar('white');
+  const [tabLocation, setTabLocation] = useState('Hanoi');
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
+      <LocationTab setTabLocation={setTabLocation} tabLocation={tabLocation} />
       <MapRender />
     </SafeAreaView>
   );
+};
+
+const LocationTab: React.FC<LocationTabInterface> = () => {
+  return <View style={styles.locationContainer}></View>;
 };
 
 const MapRender: React.FC = () => {
@@ -36,7 +44,7 @@ const Header: React.FC = () => {
       <Text style={{color: '#4E5BA6', fontSize: 20, fontWeight: '600'}}>
         Storm Forecast
       </Text>
-      {menuIcon(vw(7), vw(7), '#98A2B3')}
+      <TouchableOpacity>{menuIcon(vw(7), vw(7), '#98A2B3')}</TouchableOpacity>
     </View>
   );
 };
@@ -59,5 +67,8 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  locationContainer: {
+    position: 'absolute',
   },
 });
