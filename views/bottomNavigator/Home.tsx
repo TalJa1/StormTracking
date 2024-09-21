@@ -17,6 +17,8 @@ import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
 import {DetailInforInterface, MapInterface} from '../../services/typeProps';
 import Geolocation from '@react-native-community/geolocation';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -151,15 +153,20 @@ const DetailInforRender: React.FC<DetailInforInterface> = ({
     </View>
   );
 };
-
 const Header: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
     <View style={styles.headercontainer}>
       {bookIcon(vw(7), vw(7), '#98A2B3')}
       <Text style={{color: '#4E5BA6', fontSize: 20, fontWeight: '600'}}>
         Storm Forecast
       </Text>
-      <TouchableOpacity>{menuIcon(vw(7), vw(7), '#98A2B3')}</TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ListLocation');
+        }}>
+        {menuIcon(vw(7), vw(7), '#98A2B3')}
+      </TouchableOpacity>
     </View>
   );
 };

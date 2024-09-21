@@ -10,6 +10,7 @@ import {chartIcon, homeIcon, settingIcon} from './assets/svgXml';
 import Home from './views/bottomNavigator/Home';
 import Chart from './views/bottomNavigator/Chart';
 import Setting from './views/bottomNavigator/Setting';
+import ListLocation from './views/home/ListLocation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,6 +75,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
+        <Stack.Screen
+          name="ListLocation"
+          component={ListLocation}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
