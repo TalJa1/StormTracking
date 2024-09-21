@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
-  Alert,
   Animated,
   Image,
   PanResponder,
@@ -15,8 +14,11 @@ import useStatusBar from '../../services/useStatusBarCustom';
 import {backIcon, bookIcon, menuIcon, nextIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import Mapbox from '@rnmapbox/maps';
-import {DetailInforInterface, MapInterface} from '../../services/typeProps';
-import Geolocation from '@react-native-community/geolocation';
+import {
+  DetailInforInterface,
+  MapInterface,
+  MapLocation,
+} from '../../services/typeProps';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
@@ -26,7 +28,13 @@ Mapbox.setAccessToken(
 
 const Home = () => {
   useStatusBar('white');
-  const [tabLocation, setTabLocation] = useState('Hanoi');
+  const [tabLocation, setTabLocation] = useState<MapLocation>({
+    name: 'Hanoi',
+    description: 'Mưa rào',
+    temperature: 28,
+    long: 105.804817,
+    lad: 21.028511,
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,22 +45,6 @@ const Home = () => {
 };
 
 const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
-  const [currentLocation, setCurrentLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-
-  Geolocation.getCurrentPosition(
-    info =>
-      setCurrentLocation({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
-      }),
-    error => {
-      Alert.alert('Error', `Please enable location service ${error}`);
-    },
-  );
-
   const animatedHeight = useRef(new Animated.Value(vh(23))).current;
 
   const panResponder = useRef(
@@ -84,18 +76,15 @@ const MapRender: React.FC<MapInterface> = ({tabLocation}) => {
         <TouchableOpacity style={styles.mapTabBtn}>
           {backIcon(vw(7), vw(7))}
         </TouchableOpacity>
-        <Text style={styles.mapTabTxt}>{tabLocation}</Text>
+        <Text style={styles.mapTabTxt}>{tabLocation.name}</Text>
         <TouchableOpacity style={styles.mapTabBtn}>
           {nextIcon(vw(7), vw(7))}
         </TouchableOpacity>
       </View>
       <Mapbox.MapView style={styles.map}>
         <Mapbox.Camera
-          zoomLevel={5}
-          centerCoordinate={[
-            currentLocation.longitude,
-            currentLocation.latitude,
-          ]}
+          zoomLevel={4.5}
+          centerCoordinate={[tabLocation.long, tabLocation.lad]}
         />
       </Mapbox.MapView>
       <Animated.View
