@@ -28,3 +28,27 @@ export const LocationData = [
     lad: 20.81717,
   },
 ];
+
+export const AdditionLocaiton = [
+  {
+    name: 'Yên Bái',
+    description: 'Mưa rải rác',
+    temperature: 24,
+    long: 106.660172,
+    lad: 10.762622,
+  },
+  {
+    name: 'Lạng Sơn',
+    description: 'Quang mây',
+    temperature: 31,
+    long: 103.975,
+    lad: 22.48056,
+  },
+  {
+    name: 'Quảng Ninh',
+    description: 'Mưa phùn',
+    temperature: 30,
+    long: 105.33759,
+    lad: 20.81717,
+  },
+];
