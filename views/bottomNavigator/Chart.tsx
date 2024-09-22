@@ -18,7 +18,9 @@ import {
 import {centerAll, vh, vw} from '../../services/styleSheet';
 import {
   apSuatKhiQuyenData,
+  apSuatKhiQuyenPopUp,
   doAmData,
+  doAmPopup,
   getApSuatKhiQuyenData,
   getDoAmData,
   getLuongMuaData,
@@ -26,8 +28,11 @@ import {
   getTocDoGioData,
   getWeekDays,
   luongMuaData,
+  luongMuaPopup,
   nhietDoMatBienData,
+  nhietDoMatBienPopup,
   tocDoGioData,
+  tocDoGioPopup,
 } from '../../services/renderData';
 import {
   ChartData,
@@ -36,6 +41,7 @@ import {
 } from '../../services/typeProps';
 import LinearGradient from 'react-native-linear-gradient';
 import {LineChart} from 'react-native-gifted-charts';
+import PopUpComponent from '../../components/chart/PopUpComponent';
 
 const Chart = () => {
   useStatusBar('white');
@@ -99,15 +105,32 @@ const ChartView: React.FC<{chartData: ChartData}> = ({chartData}) => {
         colorProp={0}
         data={chartData.apSuatKhiQuyen}
         title="Áp suất khí quyển"
+        popUpData={apSuatKhiQuyenPopUp}
       />
-      <ChartRender colorProp={1} data={chartData.tocDoGio} title="Tốc độ gió" />
-      <ChartRender colorProp={1} data={chartData.luongMua} title="Lượng mưa" />
+      <ChartRender
+        colorProp={1}
+        data={chartData.tocDoGio}
+        title="Tốc độ gió"
+        popUpData={tocDoGioPopup}
+      />
+      <ChartRender
+        colorProp={1}
+        data={chartData.luongMua}
+        title="Lượng mưa"
+        popUpData={luongMuaPopup}
+      />
       <ChartRender
         colorProp={1}
         data={chartData.nhietDoMatBien}
         title="Nhiệt độ mặt biển"
+        popUpData={nhietDoMatBienPopup}
       />
-      <ChartRender colorProp={1} data={chartData.doAm} title="Độ ẩm" />
+      <ChartRender
+        colorProp={1}
+        data={chartData.doAm}
+        title="Độ ẩm"
+        popUpData={doAmPopup}
+      />
     </View>
   );
 };
@@ -116,7 +139,9 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   colorProp,
   data,
   title,
+  popUpData,
 }) => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const getColor = () => {
     switch (colorProp) {
       case 0:
@@ -128,13 +153,17 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
     }
   };
 
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
   return (
     <View style={[centerAll, {marginBottom: vh(8)}]}>
       <View style={styles.chartTitleGrp}>
         <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
           {title}
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={togglePopup}>
           {chartInforIcon(vw(6), vw(6), '#4E5BA6')}
         </TouchableOpacity>
       </View>
@@ -171,6 +200,12 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
           showTextOnFocus={true}
         />
       </LinearGradient>
+      <PopUpComponent
+        visible={isPopupVisible}
+        onClose={togglePopup}
+        popUpData={popUpData}
+        title={title}
+      />
     </View>
   );
 };

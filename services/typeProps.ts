@@ -42,6 +42,7 @@ export interface ChartRenderInterface {
   title: string;
   data: {value: number; label: string}[];
   colorProp: number;
+  popUpData: ChartPopUpItemInterface;
 }
 
 interface DataPoint {
@@ -56,4 +57,16 @@ export interface ChartData {
   luongMua: DataPoint[];
   nhietDoMatBien: DataPoint[];
   doAm: DataPoint[];
+}
+
+export interface ChartPopUpItemInterface {
+  safe: string[];
+  danger: string[];
+}
+
+export interface ChartPopUpInterface {
+  title: string;
+  visible: boolean;
+  onClose: () => void;
+  popUpData: ChartPopUpItemInterface;
 }
