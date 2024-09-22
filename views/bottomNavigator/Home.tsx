@@ -132,6 +132,14 @@ const MapRender: React.FC<MapInterface> = ({
     setRenderIndex(prevIndex => (prevIndex < maxIndex - 1 ? prevIndex + 1 : 0));
   };
 
+  const stormPath = [
+    {id: 'e5', coordinates: [113.0, 17.5]}, // Moved significantly further south and east
+    {id: 'e4', coordinates: [111.0, 17.5]}, // Increased space between e5 and e3
+    {id: 'e3', coordinates: [109.0, 18.5]}, // More distance between e4 and e2
+    {id: 'e2', coordinates: [108.0, 19.2]}, // Larger space from e3 to e1
+    {id: 'e1', coordinates: [107.2, 20.0]}, // Near northern Vietnam (unchanged)
+  ];
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
@@ -145,9 +153,39 @@ const MapRender: React.FC<MapInterface> = ({
       </View>
       <Mapbox.MapView style={styles.map}>
         <Mapbox.Camera
-          zoomLevel={4.5}
+          zoomLevel={5}
           centerCoordinate={[tabLocation.long, tabLocation.lad]}
         />
+        <Mapbox.Images
+          images={{
+            e5: require('../../assets/home/e5.png'),
+            e4: require('../../assets/home/e4.png'),
+            e3: require('../../assets/home/e3.png'),
+            e2: require('../../assets/home/e2.png'),
+            e1: require('../../assets/home/e1.png'),
+          }}
+        />
+        {stormPath.map(point => (
+          <Mapbox.ShapeSource
+            key={point.id}
+            id={point.id}
+            shape={{
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: point.coordinates,
+              },
+              properties: {},
+            }}>
+            <Mapbox.SymbolLayer
+              id={`${point.id}-layer`}
+              style={{
+                iconImage: point.id,
+                iconSize: 1, // Adjust the size as needed
+              }}
+            />
+          </Mapbox.ShapeSource>
+        ))}
       </Mapbox.MapView>
       <Animated.View
         style={[styles.inforContainer, {height: animatedHeight}]}
@@ -204,6 +242,7 @@ const DetailInforRender: React.FC<DetailInforInterface> = ({
     </View>
   );
 };
+
 const Header: React.FC<HomeHeader> = ({setModalVisible}) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   return (
