@@ -32,6 +32,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {loadData, saveData} from '../../services/storage';
 import {LocationData} from '../../services/renderData';
 import PopUpComponent from '../../components/home/PopUpComponent';
+import * as turf from '@turf/turf';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoidGFsamExIiwiYSI6ImNtMWFpZ2RvZDAxdzcyc3M2M2xjcW1tanMifQ.uTGpezucjuEe8CrzzHkR1w',
@@ -149,6 +150,8 @@ const MapRender: React.FC<MapInterface> = ({
     properties: {},
   };
 
+  const curvedLine = turf.bezierSpline(lineString);
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
@@ -174,7 +177,7 @@ const MapRender: React.FC<MapInterface> = ({
           e1: require('../../assets/home/e1.png'),
         }}
       />
-      <Mapbox.ShapeSource id="lineSource" shape={lineString}>
+      <Mapbox.ShapeSource id="lineSource" shape={curvedLine}>
         <Mapbox.LineLayer
           id="lineLayer"
           style={{
