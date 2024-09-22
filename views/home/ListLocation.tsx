@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -8,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {backArrowIcon, searchingIcon} from '../../assets/svgXml';
@@ -25,7 +25,6 @@ const ListLocation = () => {
     <SafeAreaView style={styles.container}>
       <Header />
       <ScrollView>
-        <SearchBar />
         <MainContent />
       </ScrollView>
     </SafeAreaView>
@@ -36,6 +35,7 @@ const MainContent: React.FC = () => {
   const [mainData, setMainData] = useState<MapLocation[]>(LocationData);
   const [addData, setAddData] = useState<MapLocation[]>(AdditionLocaiton);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchMainData = async () => {
     try {
@@ -86,11 +86,20 @@ const MainContent: React.FC = () => {
     await saveData('additionLocationStorage', updatedAddData);
   };
 
+  const filteredMainData = mainData.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const filteredAddData = addData.filter(item =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     <View style={{paddingVertical: vh(1), rowGap: vh(2)}}>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>Đã thêm</Text>
-        {mainData.map((item, index) => {
+        {filteredMainData.map((item, index) => {
           return (
             <View key={index} style={styles.blockLocation}>
               <View>
@@ -104,7 +113,7 @@ const MainContent: React.FC = () => {
       </View>
       <View style={styles.mainContainer}>
         <Text style={styles.mainTitle}>Gợi ý</Text>
-        {addData.map((item, index) => {
+        {filteredAddData.map((item, index) => {
           return (
             <View key={index} style={styles.blockLocation}>
               <View>
@@ -127,7 +136,10 @@ const MainContent: React.FC = () => {
   );
 };
 
-const SearchBar: React.FC = () => {
+const SearchBar: React.FC<{
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+}> = ({searchQuery, setSearchQuery}) => {
   return (
     <View style={styles.searchContainer}>
       {searchingIcon(vw(7), vw(7))}
@@ -135,6 +147,8 @@ const SearchBar: React.FC = () => {
         style={styles.input}
         placeholder="Tìm tên thành phố"
         placeholderTextColor="#888"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
       />
     </View>
   );
