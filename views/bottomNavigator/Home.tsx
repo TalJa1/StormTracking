@@ -140,6 +140,15 @@ const MapRender: React.FC<MapInterface> = ({
     {id: 'e1', coordinates: [107.2, 20.0]}, // Near northern Vietnam (unchanged)
   ];
 
+  const lineString: GeoJSON.Feature<GeoJSON.LineString> = {
+    type: 'Feature',
+    geometry: {
+      type: 'LineString',
+      coordinates: stormPath.map(point => point.coordinates),
+    },
+    properties: {},
+  };
+
   return (
     <View style={styles.mapContainer}>
       <View style={styles.locationContainer}>
@@ -152,41 +161,51 @@ const MapRender: React.FC<MapInterface> = ({
         </TouchableOpacity>
       </View>
       <Mapbox.MapView style={styles.map}>
-        <Mapbox.Camera
-          zoomLevel={5}
-          centerCoordinate={[tabLocation.long, tabLocation.lad]}
-        />
-        <Mapbox.Images
-          images={{
-            e5: require('../../assets/home/e5.png'),
-            e4: require('../../assets/home/e4.png'),
-            e3: require('../../assets/home/e3.png'),
-            e2: require('../../assets/home/e2.png'),
-            e1: require('../../assets/home/e1.png'),
+      <Mapbox.Camera
+        zoomLevel={5}
+        centerCoordinate={[tabLocation.long, tabLocation.lad]}
+      />
+      <Mapbox.Images
+        images={{
+          e5: require('../../assets/home/e5.png'),
+          e4: require('../../assets/home/e4.png'),
+          e3: require('../../assets/home/e3.png'),
+          e2: require('../../assets/home/e2.png'),
+          e1: require('../../assets/home/e1.png'),
+        }}
+      />
+      <Mapbox.ShapeSource id="lineSource" shape={lineString}>
+        <Mapbox.LineLayer
+          id="lineLayer"
+          style={{
+            lineColor: '#FFFFFF99', // Set the line color
+            lineWidth: 10, // Set the line width
+            lineOpacity: 0.5, // Set the line opacity
           }}
         />
-        {stormPath.map(point => (
-          <Mapbox.ShapeSource
-            key={point.id}
-            id={point.id}
-            shape={{
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: point.coordinates,
-              },
-              properties: {},
-            }}>
-            <Mapbox.SymbolLayer
-              id={`${point.id}-layer`}
-              style={{
-                iconImage: point.id,
-                iconSize: 1, // Adjust the size as needed
-              }}
-            />
-          </Mapbox.ShapeSource>
-        ))}
-      </Mapbox.MapView>
+      </Mapbox.ShapeSource>
+      {stormPath.map(point => (
+        <Mapbox.ShapeSource
+          key={point.id}
+          id={point.id}
+          shape={{
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: point.coordinates,
+            },
+            properties: {},
+          }}>
+          <Mapbox.SymbolLayer
+            id={`${point.id}-layer`}
+            style={{
+              iconImage: point.id,
+              iconSize: 1, // Adjust the size as needed
+            }}
+          />
+        </Mapbox.ShapeSource>
+      ))}
+    </Mapbox.MapView>
       <Animated.View
         style={[styles.inforContainer, {height: animatedHeight}]}
         {...panResponder.panHandlers}>
