@@ -16,7 +16,14 @@ import {
   safeIcon,
 } from '../../assets/svgXml';
 import {centerAll, vh, vw} from '../../services/styleSheet';
-import {getWeekDays} from '../../services/renderData';
+import {
+  apSuatKhiQuyenData,
+  doAmData,
+  getWeekDays,
+  luongMuaData,
+  nhietDoMatBienData,
+  tocDoGioData,
+} from '../../services/renderData';
 import {ChartRenderInterface, TabInforChart} from '../../services/typeProps';
 import LinearGradient from 'react-native-linear-gradient';
 import {LineChart} from 'react-native-gifted-charts';
@@ -32,21 +39,13 @@ const Chart = () => {
           <DateTimeRender />
         </View>
         <ChartView />
+        <View style={{height: vh(9)}} />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const ChartView: React.FC = () => {
-  const data = [
-    {value: 50, label: '00 giờ'},
-    {value: 80, label: '02 giờ'},
-    {value: 90, label: '04 giờ'},
-    {value: 70, label: '06 giờ'},
-    {value: 100, label: '08 giờ'},
-    {value: 50, label: '10 giờ'},
-    {value: 80, label: '12 giờ'},
-  ];
   return (
     <View style={{flex: 1}}>
       <View style={styles.tabInforGrp}>
@@ -61,7 +60,19 @@ const ChartView: React.FC = () => {
           color="#05603A"
         />
       </View>
-      <ChartRender colorProp={0} data={data} title="Áp suất khí quyển" />
+      <ChartRender
+        colorProp={0}
+        data={apSuatKhiQuyenData}
+        title="Áp suất khí quyển"
+      />
+      <ChartRender colorProp={1} data={tocDoGioData} title="Tốc độ gió" />
+      <ChartRender colorProp={1} data={luongMuaData} title="Lượng mưa" />
+      <ChartRender
+        colorProp={1}
+        data={nhietDoMatBienData}
+        title="Nhiệt độ mặt biển"
+      />
+      <ChartRender colorProp={1} data={doAmData} title="Độ ẩm" />
     </View>
   );
 };
@@ -83,7 +94,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   };
 
   return (
-    <View style={centerAll}>
+    <View style={[centerAll, {marginBottom: vh(8)}]}>
       <View style={styles.chartTitleGrp}>
         <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
           {title}

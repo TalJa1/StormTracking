@@ -282,7 +282,7 @@ export const OtherInfor = [
   },
 ];
 
-export function getWeekDays(): { dayOfWeek: string; date: string }[] {
+export function getWeekDays(): {dayOfWeek: string; date: string}[] {
   const daysOfWeek = ['CN', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7'];
   const today = new Date();
   const result = [];
@@ -294,8 +294,45 @@ export function getWeekDays(): { dayOfWeek: string; date: string }[] {
     const dayOfWeek = i === 0 ? 'H.nay' : daysOfWeek[date.getDay()];
     const formattedDate = date.getDate().toString().padStart(2, '0'); // Ensure two digits
 
-    result.push({ dayOfWeek, date: formattedDate });
+    result.push({dayOfWeek, date: formattedDate});
   }
 
   return result;
 }
+
+const generateRandomValue = (average: number, range: number) => {
+  const min = average - range;
+  const max = average + range;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const generateData = (average: number, range: number) => [
+  {value: generateRandomValue(average, range), label: '00 giờ'},
+  {value: generateRandomValue(average, range), label: '02 giờ'},
+  {value: generateRandomValue(average, range), label: '04 giờ'},
+  {value: generateRandomValue(average, range), label: '06 giờ'},
+  {value: generateRandomValue(average, range), label: '08 giờ'},
+  {value: generateRandomValue(average, range), label: '10 giờ'},
+  {value: generateRandomValue(average, range), label: '12 giờ'},
+];
+
+const getApSuatKhiQuyenData = () => generateData(1100, 900); // Average atmospheric pressure in hPa
+const getTocDoGioData = () => generateData(15, 5); // Average wind speed in m/s
+const getLuongMuaData = () => generateData(50, 20); // Average rainfall in mm
+const getNhietDoMatBienData = () => generateData(25, 2); // Average sea surface temperature in °C
+const getDoAmData = () => generateData(70, 10); // Average humidity in %
+
+export {
+  getApSuatKhiQuyenData,
+  getTocDoGioData,
+  getLuongMuaData,
+  getNhietDoMatBienData,
+  getDoAmData,
+};
+
+// Example usage:
+export const apSuatKhiQuyenData = getApSuatKhiQuyenData();
+export const tocDoGioData = getTocDoGioData();
+export const luongMuaData = getLuongMuaData();
+export const nhietDoMatBienData = getNhietDoMatBienData();
+export const doAmData = getDoAmData();
