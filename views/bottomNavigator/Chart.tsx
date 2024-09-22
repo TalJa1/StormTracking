@@ -67,6 +67,7 @@ const ChartRender: React.FC = () => {
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}} // To split vertically. Change to `{x: 1, y: 0}` for horizontal split.
         style={styles.background}>
+        <View style={styles.dashedLine} />
         {/* Line Chart on top of the gradient background */}
         <LineChart
           curved
@@ -77,11 +78,11 @@ const ChartRender: React.FC = () => {
           rulesThickness={2} // Customize rules thickness
           hideYAxisText={true}
           rulesColor={'#FDA29B'} // Customize rules color
-          noOfSections={1} // Show only one rule
+          hideAxesAndRules
           color="#3E4784" // Customize chart line color
           hideDataPoints={true} // Show data points
           initialSpacing={25}
-          xAxisColor={'white'}
+          xAxisColor={'transparent'}
           yAxisColor={'transparent'}
           xAxisLabelTextStyle={{color: '#667085'}}
           showYAxisIndices={false}
@@ -234,5 +235,14 @@ const styles = StyleSheet.create({
   background: {
     width: vw(90),
     height: 200,
+  },
+  dashedLine: {
+    position: 'absolute',
+    width: '100%', // Thickness of the line
+    height: 2, // Full height of the container
+    borderStyle: 'dashed',
+    borderWidth: 1, // Adjust for the thickness of the dashes
+    borderColor: '#FDA29B', // Customize the dashed line color
+    top: '50%',
   },
 });
