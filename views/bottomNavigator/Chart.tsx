@@ -9,10 +9,15 @@ import {
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {bookIcon, dangerIcon, safeIcon} from '../../assets/svgXml';
+import {
+  bookIcon,
+  chartInforIcon,
+  dangerIcon,
+  safeIcon,
+} from '../../assets/svgXml';
 import {centerAll, vh, vw} from '../../services/styleSheet';
 import {getWeekDays} from '../../services/renderData';
-import {TabInforChart} from '../../services/typeProps';
+import {ChartRenderInterface, TabInforChart} from '../../services/typeProps';
 import LinearGradient from 'react-native-linear-gradient';
 import {LineChart} from 'react-native-gifted-charts';
 
@@ -33,6 +38,15 @@ const Chart = () => {
 };
 
 const ChartView: React.FC = () => {
+  const data = [
+    {value: 50, label: '00 giờ'},
+    {value: 80, label: '02 giờ'},
+    {value: 90, label: '04 giờ'},
+    {value: 70, label: '06 giờ'},
+    {value: 100, label: '08 giờ'},
+    {value: 50, label: '10 giờ'},
+    {value: 80, label: '12 giờ'},
+  ];
   return (
     <View style={{flex: 1}}>
       <View style={styles.tabInforGrp}>
@@ -47,25 +61,39 @@ const ChartView: React.FC = () => {
           color="#05603A"
         />
       </View>
-      <ChartRender />
+      <ChartRender colorProp={0} data={data} title="Áp suất khí quyển" />
     </View>
   );
 };
 
-const ChartRender: React.FC = () => {
-  const data = [
-    {value: 50, label: '00 giờ'},
-    {value: 80, label: '00 giờ'},
-    {value: 90, label: 'Mar'},
-    {value: 70, label: 'Apr'},
-    {value: 100, label: 'May'},
-    {value: 50, label: '00 giờ'},
-    {value: 80, label: '00 giờ'},
-  ];
+const ChartRender: React.FC<ChartRenderInterface> = ({
+  colorProp,
+  data,
+  title,
+}) => {
+  const getColor = () => {
+    switch (colorProp) {
+      case 0:
+        return ['#FFFFFF', '#D1FADF', '#FDA29B', '#FFFFFF'];
+      case 1:
+        return ['#FFFFFF', '#FDA29B', '#D1FADF', '#FFFFFF'];
+      default:
+        return ['#FFFFFF', '#D1FADF', '#FDA29B', '#FFFFFF']; // Default colors
+    }
+  };
+
   return (
     <View style={centerAll}>
+      <View style={styles.chartTitleGrp}>
+        <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
+          {title}
+        </Text>
+        <TouchableOpacity>
+          {chartInforIcon(vw(6), vw(6), '#4E5BA6')}
+        </TouchableOpacity>
+      </View>
       <LinearGradient
-        colors={['#FFFFFF', '#D1FADF', '#FDA29B', '#FFFFFF']} // Customize your two colors here
+        colors={getColor()} // Customize your two colors here
         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}} // To split vertically. Change to `{x: 1, y: 0}` for horizontal split.
         style={styles.background}>
@@ -76,13 +104,10 @@ const ChartRender: React.FC = () => {
           data={data}
           width={vw(80)}
           height={200}
-          hideRules={false}
           rulesThickness={2} // Customize rules thickness
-          hideYAxisText={true}
           rulesColor={'#FDA29B'} // Customize rules color
           hideAxesAndRules
           color="#3E4784" // Customize chart line color
-          hideDataPoints={true} // Show data points
           initialSpacing={25}
           xAxisColor={'transparent'}
           yAxisColor={'transparent'}
@@ -91,7 +116,13 @@ const ChartRender: React.FC = () => {
             fontSize: 12,
             withDecay: '500',
           }}
+          hideDataPoints={true} // Show data points
+          hideRules={false}
+          hideYAxisText={true}
+          animateOnDataChange={true}
+          focusEnabled={true}
           showYAxisIndices={false}
+          showTextOnFocus={true}
         />
       </LinearGradient>
     </View>
@@ -241,6 +272,7 @@ const styles = StyleSheet.create({
   background: {
     width: vw(90),
     height: 200,
+    borderRadius: 20,
   },
   dashedLine: {
     position: 'absolute',
@@ -250,5 +282,11 @@ const styles = StyleSheet.create({
     borderWidth: 1, // Adjust for the thickness of the dashes
     borderColor: '#FDA29B', // Customize the dashed line color
     top: '50%',
+  },
+  chartTitleGrp: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: vw(6),
   },
 });

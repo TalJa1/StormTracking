@@ -37,3 +37,9 @@ export interface TabInforChart {
   icon: any;
   color: string;
 }
+
+export interface ChartRenderInterface {
+  title: string;
+  data: {value: number; label: string}[];
+  colorProp: number;
+}
