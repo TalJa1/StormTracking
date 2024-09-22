@@ -9,6 +9,36 @@ export const test = (w?: any, h?: any, color?: any) => {
   return <SvgXml xml={xml} width={w} height={h} />;
 };
 
+export const dangerIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="50" height="26" viewBox="0 0 50 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="48" height="24" rx="4" fill="url(#paint0_linear_20_90)" stroke="#FEE4E2" stroke-linecap="round"/>
+<defs>
+<linearGradient id="paint0_linear_20_90" x1="26.554" y1="26.35" x2="26.554" y2="1" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FEF3F2"/>
+<stop offset="1" stop-color="#FEE4E2"/>
+</linearGradient>
+</defs>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
+export const safeIcon = (w?: any, h?: any, color?: any) => {
+  const xml = `<svg width="49" height="24" viewBox="0 0 49 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="0.5" width="47" height="23" rx="3.5" fill="url(#paint0_linear_20_89)" stroke="#D1FADF"/>
+<defs>
+<linearGradient id="paint0_linear_20_89" x1="26.054" y1="25.35" x2="26.054" y2="3.14658e-07" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D1FADF"/>
+<stop offset="1" stop-color="#ECFDF3"/>
+</linearGradient>
+</defs>
+</svg>
+`;
+
+  return <SvgXml xml={xml} width={w} height={h} />;
+};
+
 export const inforIcon = (w?: any, h?: any, color?: any) => {
   const xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12.12 12.78C12.05 12.77 11.96 12.77 11.88 12.78C10.12 12.72 8.72 11.28 8.72 9.50998C8.72 7.69998 10.18 6.22998 12 6.22998C13.81 6.22998 15.28 7.69998 15.28 9.50998C15.27 11.28 13.88 12.72 12.12 12.78Z" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
