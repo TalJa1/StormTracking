@@ -281,3 +281,21 @@ export const OtherInfor = [
     title: 'Đánh giá',
   },
 ];
+
+export function getWeekDays(): { dayOfWeek: string; date: string }[] {
+  const daysOfWeek = ['CN', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7'];
+  const today = new Date();
+  const result = [];
+
+  for (let i = -3; i <= 3; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const dayOfWeek = i === 0 ? 'H.nay' : daysOfWeek[date.getDay()];
+    const formattedDate = date.getDate().toString().padStart(2, '0'); // Ensure two digits
+
+    result.push({ dayOfWeek, date: formattedDate });
+  }
+
+  return result;
+}
