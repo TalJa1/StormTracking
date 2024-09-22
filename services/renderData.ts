@@ -336,3 +336,56 @@ export const tocDoGioData = getTocDoGioData();
 export const luongMuaData = getLuongMuaData();
 export const nhietDoMatBienData = getNhietDoMatBienData();
 export const doAmData = getDoAmData();
+
+export const apSuatKhiQuyenPopUp = {
+  safe: [
+    'Áp suất khí quyển bình thường ở mực nước biển là khoảng  1013 hPa (hectopascal).',
+    'Khi áp suất duy trì ở mức trên hoặc gần với giá trị này, không có dấu hiệu cho thấy sự hình thành của bão.',
+  ],
+  danger: [
+    'Dưới 1005 hPa: Áp suất giảm thấp hơn mức bình thường có thể cho thấy một vùng áp thấp đang hình thành.',
+    'Dưới 1000 hPa: Đây thường là mức áp suất mà các nhà khí tượng học bắt đầu chú ý đến khả năng hình thành bão nhiệt đới.',
+    'Dưới 980 hPa: Áp suất rất thấp, thường cho thấy bão đang phát triển và có khả năng trở nên mạnh hơn.',
+  ],
+};
+
+export const nhietDoMatBienPopup = {
+  safe: [
+    'Nhiệt độ bề mặt biển dưới 26°C thường không đủ để cung cấp năng lượng cần thiết cho sự hình thành của bão nhiệt đới.',
+  ],
+  danger: [
+    'Trên 26-28°C: Đây là mức nhiệt độ tối thiểu để hỗ trợ sự hình thành và phát triển của bão nhiệt đới.',
+    'Trên 28°C: Nhiệt độ càng cao, càng cung cấp nhiều năng lượng cho sự phát triển của bão mạnh.',
+  ],
+};
+
+export const tocDoGioPopup = {
+  safe: [
+    'Tốc độ gió dưới  37 km/h (khoảng 20 knots) thường được coi là gió nhẹ và không có nguy cơ hình thành bão.',
+  ],
+  danger: [
+    '37-63 km/h (20-34 knots): Gió mạnh hơn, có thể là dấu hiệu của một hệ thống thời tiết đang phát triển hoặc một cơn áp thấp nhiệt đới.',
+    '63-118 km/h (34-64 knots): Tốc độ gió đạt mức báo động cho một bão nhiệt đới.',
+    'Trên 118 km/h (64 knots): Tốc độ gió mạnh tương ứng với một cơn bão nhiệt đới cấp 1 trở lên (theo thang Saffir-Simpson).',
+  ],
+};
+
+export const doAmPopup = {
+  safe: [
+    'Độ ẩm tương đối trong khí quyển dưới 50-60% thường không tạo điều kiện thuận lợi cho sự hình thành bão nhiệt đới.',
+  ],
+  danger: [
+    'Trên 60%: Độ ẩm tương đối cao trong tầng thấp và tầng trung của khí quyển là cần thiết cho sự hình thành bão nhiệt đới. ',
+    'Trên 70-80%: Độ ẩm cao hơn nữa hỗ trợ quá trình ngưng tụ và tạo mây, góp phần hình thành và phát triển bão.',
+  ],
+};
+
+export const luongMuaPopup = {
+  safe: [
+    'Lượng mưa trung bình dưới **20 mm/giờ thường không gây ra nguy cơ lũ lụt hoặc tạo thành bão.',
+  ],
+  danger: [
+    'Trên 20-50 mm/giờ: Có thể gây ra mưa lớn và ngập úng ở một số khu vực, đặc biệt là khi lượng mưa này kéo dài trong nhiều giờ.',
+    'Trên 50 mm/giờ: Thường liên quan đến các trận mưa cực lớn và bão nhiệt đới, gây ra nguy cơ lũ quét, sạt lở đất.',
+  ],
+};
