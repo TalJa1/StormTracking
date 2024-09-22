@@ -48,11 +48,7 @@ const Chart = () => {
     nhietDoMatBien: nhietDoMatBienData,
     doAm: doAmData,
   });
-  // getApSuatKhiQuyenData,
-  // getTocDoGioData,
-  // getLuongMuaData,
-  // getNhietDoMatBienData,
-  // getDoAmData,
+
   const handleDateChange = (dayDate: number) => {
     setSelectedDate(dayDate);
     setChartData({
