@@ -19,6 +19,11 @@ import {centerAll, vh, vw} from '../../services/styleSheet';
 import {
   apSuatKhiQuyenData,
   doAmData,
+  getApSuatKhiQuyenData,
+  getDoAmData,
+  getLuongMuaData,
+  getNhietDoMatBienData,
+  getTocDoGioData,
   getWeekDays,
   luongMuaData,
   nhietDoMatBienData,
@@ -43,15 +48,19 @@ const Chart = () => {
     nhietDoMatBien: nhietDoMatBienData,
     doAm: doAmData,
   });
-
+  // getApSuatKhiQuyenData,
+  // getTocDoGioData,
+  // getLuongMuaData,
+  // getNhietDoMatBienData,
+  // getDoAmData,
   const handleDateChange = (dayDate: number) => {
     setSelectedDate(dayDate);
     setChartData({
-      apSuatKhiQuyen: apSuatKhiQuyenData, // Generate new data for each chart
-      tocDoGio: tocDoGioData,
-      luongMua: luongMuaData,
-      nhietDoMatBien: nhietDoMatBienData,
-      doAm: doAmData,
+      apSuatKhiQuyen: getApSuatKhiQuyenData(), // Generate new data for each chart
+      tocDoGio: getTocDoGioData(),
+      luongMua: getLuongMuaData(),
+      nhietDoMatBien: getNhietDoMatBienData(),
+      doAm: getDoAmData(),
     });
   };
 
