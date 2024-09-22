@@ -10,6 +10,7 @@ import {chartIcon, homeIcon, settingIcon} from './assets/svgXml';
 import Home from './views/bottomNavigator/Home';
 import Chart from './views/bottomNavigator/Chart';
 import Setting from './views/bottomNavigator/Setting';
+import ListLocation from './views/home/ListLocation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,6 +75,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         {/* end here */}
+        <Stack.Screen
+          name="ListLocation"
+          component={ListLocation}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -83,9 +89,8 @@ const styles = StyleSheet.create({
   tabBar: {
     height: vh(8),
     borderRadius: 12,
-    paddingVertical: vh(1),
     position: 'absolute',
-    bottom: vh(2),
+    bottom: vh(1),
     left: vw(5),
     right: vw(5),
     shadowColor: '#000',
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3.84,
     elevation: 5,
+    opacity: 0.9,
   },
   tabBarLabel: {
     fontSize: 12,
