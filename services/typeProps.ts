@@ -31,3 +31,9 @@ export interface RenderLayoutInterface {
   title: string;
   renderData: RenderLayoutItem[];
 }
+
+export interface TabInforChart {
+  title: string;
+  icon: any;
+  color: string;
+}

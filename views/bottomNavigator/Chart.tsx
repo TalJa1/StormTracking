@@ -9,9 +9,10 @@ import {
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
-import {bookIcon} from '../../assets/svgXml';
+import {bookIcon, dangerIcon, safeIcon} from '../../assets/svgXml';
 import {vh, vw} from '../../services/styleSheet';
 import {getWeekDays} from '../../services/renderData';
+import {TabInforChart} from '../../services/typeProps';
 
 const Chart = () => {
   useStatusBar('white');
@@ -23,8 +24,39 @@ const Chart = () => {
         <View style={{paddingHorizontal: vw(5)}}>
           <DateTimeRender />
         </View>
+        <ChartView />
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const ChartView: React.FC = () => {
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.tabInforGrp}>
+        <TabInfor
+          title="Mức báo động"
+          icon={dangerIcon(vw(10), vw(10))}
+          color="#912018"
+        />
+        <TabInfor
+          title="Mức an toàn"
+          icon={safeIcon(vw(10), vw(10))}
+          color="#05603A"
+        />
+      </View>
+    </View>
+  );
+};
+
+const TabInfor: React.FC<TabInforChart> = ({color, icon, title}) => {
+  return (
+    <View style={styles.tabInforContainer}>
+      {icon}
+      <Text style={{color: color, fontSize: 12, fontWeight: '500'}}>
+        {title}
+      </Text>
+    </View>
   );
 };
 
@@ -140,5 +172,21 @@ const styles = StyleSheet.create({
   selectedCircle: {
     backgroundColor: '#98A2B3',
     borderRadius: vw(30),
+  },
+  tabInforContainer: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#F2F4F7',
+    backgroundColor: '#F9FAFB',
+    padding: vw(1),
+    alignItems: 'center',
+    columnGap: vw(2),
+  },
+  tabInforGrp: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: vh(2),
+    paddingHorizontal: vw(5),
   },
 });
