@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {
@@ -54,6 +54,10 @@ const Chart = () => {
       doAm: doAmData,
     });
   };
+
+  useEffect(() => {
+    handleDateChange(selectedDate);
+  }, [selectedDate]);
 
   return (
     <SafeAreaView style={styles.container}>
