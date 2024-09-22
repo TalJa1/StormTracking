@@ -59,6 +59,8 @@ const ChartRender: React.FC = () => {
     {value: 90, label: 'Mar'},
     {value: 70, label: 'Apr'},
     {value: 100, label: 'May'},
+    {value: 50, label: '00 giờ'},
+    {value: 80, label: '00 giờ'},
   ];
   return (
     <View style={centerAll}>
@@ -88,7 +90,6 @@ const ChartRender: React.FC = () => {
             color: '#667085',
             fontSize: 12,
             withDecay: '500',
-            textAlign: 'center',
           }}
           showYAxisIndices={false}
         />
