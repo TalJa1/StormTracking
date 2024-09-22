@@ -43,3 +43,17 @@ export interface ChartRenderInterface {
   data: {value: number; label: string}[];
   colorProp: number;
 }
+
+interface DataPoint {
+  value: number;
+  label: string;
+}
+
+// Define the interface for the object containing the data for each category
+export interface ChartData {
+  apSuatKhiQuyen: DataPoint[];
+  tocDoGio: DataPoint[];
+  luongMua: DataPoint[];
+  nhietDoMatBien: DataPoint[];
+  doAm: DataPoint[];
+}

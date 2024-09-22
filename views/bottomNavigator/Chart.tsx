@@ -24,28 +24,54 @@ import {
   nhietDoMatBienData,
   tocDoGioData,
 } from '../../services/renderData';
-import {ChartRenderInterface, TabInforChart} from '../../services/typeProps';
+import {
+  ChartData,
+  ChartRenderInterface,
+  TabInforChart,
+} from '../../services/typeProps';
 import LinearGradient from 'react-native-linear-gradient';
 import {LineChart} from 'react-native-gifted-charts';
 
 const Chart = () => {
   useStatusBar('white');
+  const today = new Date().getDate();
+  const [selectedDate, setSelectedDate] = useState<number>(today);
+  const [chartData, setChartData] = useState({
+    apSuatKhiQuyen: apSuatKhiQuyenData,
+    tocDoGio: tocDoGioData,
+    luongMua: luongMuaData,
+    nhietDoMatBien: nhietDoMatBienData,
+    doAm: doAmData,
+  });
+
+  const handleDateChange = (dayDate: number) => {
+    setSelectedDate(dayDate);
+    setChartData({
+      apSuatKhiQuyen: apSuatKhiQuyenData, // Generate new data for each chart
+      tocDoGio: tocDoGioData,
+      luongMua: luongMuaData,
+      nhietDoMatBien: nhietDoMatBienData,
+      doAm: doAmData,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{flex: 1}}>
         <Header />
         <View style={{paddingHorizontal: vw(5)}}>
-          <DateTimeRender />
+          <DateTimeRender
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
         </View>
-        <ChartView />
+        <ChartView chartData={chartData} />
         <View style={{height: vh(9)}} />
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const ChartView: React.FC = () => {
+const ChartView: React.FC<{chartData: ChartData}> = ({chartData}) => {
   return (
     <View style={{flex: 1}}>
       <View style={styles.tabInforGrp}>
@@ -62,17 +88,17 @@ const ChartView: React.FC = () => {
       </View>
       <ChartRender
         colorProp={0}
-        data={apSuatKhiQuyenData}
+        data={chartData.apSuatKhiQuyen}
         title="Áp suất khí quyển"
       />
-      <ChartRender colorProp={1} data={tocDoGioData} title="Tốc độ gió" />
-      <ChartRender colorProp={1} data={luongMuaData} title="Lượng mưa" />
+      <ChartRender colorProp={1} data={chartData.tocDoGio} title="Tốc độ gió" />
+      <ChartRender colorProp={1} data={chartData.luongMua} title="Lượng mưa" />
       <ChartRender
         colorProp={1}
-        data={nhietDoMatBienData}
+        data={chartData.nhietDoMatBien}
         title="Nhiệt độ mặt biển"
       />
-      <ChartRender colorProp={1} data={doAmData} title="Độ ẩm" />
+      <ChartRender colorProp={1} data={chartData.doAm} title="Độ ẩm" />
     </View>
   );
 };
@@ -151,9 +177,11 @@ const TabInfor: React.FC<TabInforChart> = ({color, icon, title}) => {
   );
 };
 
-const DateTimeRender: React.FC = () => {
+const DateTimeRender: React.FC<{
+  selectedDate: number;
+  handleDateChange: (dayDate: number) => void;
+}> = ({selectedDate, handleDateChange}) => {
   const today = new Date().getDate();
-  const [selectedDate, setSelectedDate] = useState<number>(today);
 
   return (
     <View style={[styles.dateContainer]}>
@@ -167,7 +195,7 @@ const DateTimeRender: React.FC = () => {
           <TouchableOpacity
             key={index}
             style={styles.dateTxtContainer}
-            onPress={() => setSelectedDate(dayDate)}>
+            onPress={() => handleDateChange(dayDate)}>
             <Text style={styles.dateofWeek}>{day.dayOfWeek}</Text>
             <View
               style={[
