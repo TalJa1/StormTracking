@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {bookIcon} from '../../assets/svgXml';
@@ -22,23 +28,34 @@ const Chart = () => {
 
 const DateTimeRender: React.FC = () => {
   const today = new Date().getDate();
+  const [selectedDate, setSelectedDate] = useState<number>(today);
+
   return (
     <View style={[styles.dateContainer]}>
       {getWeekDays().map((day, index) => {
         const dayDate = parseInt(day.date, 10);
         const isToday = dayDate === today;
-        const isPast = dayDate < today;
-        const isFuture = dayDate > today;
+        const isSelected = dayDate === selectedDate;
+
         return (
-          <TouchableOpacity key={index} style={styles.dateTxtContainer}>
+          <TouchableOpacity
+            key={index}
+            style={styles.dateTxtContainer}
+            onPress={() => setSelectedDate(dayDate)}>
             <Text style={styles.dateofWeek}>{day.dayOfWeek}</Text>
-            <View style={[styles.dateCircle, isToday && styles.todayCircle]}>
+            <View
+              style={[
+                styles.dateCircle,
+                isToday && !isSelected && styles.todayCircle,
+                isSelected && styles.selectedCircle,
+                isToday && isSelected && {backgroundColor: '#4E5BA6'},
+              ]}>
               <Text
                 style={[
                   styles.datetime,
-                  isToday && styles.todayText,
-                  isPast && styles.pastText,
-                  isFuture && styles.futureText,
+                  isToday && !isSelected && styles.todayText,
+                  isSelected && styles.selectedText,
+                  !isToday && !isSelected && styles.defaultText,
                 ]}>
                 {day.date}
               </Text>
@@ -93,13 +110,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     rowGap: vh(0.5),
   },
-  pastText: {
-    color: '#98A2B3',
-  },
   todayText: {
+    color: '#4E5BA6',
+  },
+  selectedText: {
     color: '#FCFCFD',
   },
-  futureText: {
+  defaultText: {
     color: '#344054',
   },
   dateCircle: {
@@ -110,6 +127,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   todayCircle: {
-    backgroundColor: '#4E5BA6',
+    backgroundColor: 'transparent',
+  },
+  selectedCircle: {
+    backgroundColor: '#98A2B3',
+    borderRadius: vw(30),
   },
 });
