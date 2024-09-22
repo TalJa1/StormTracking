@@ -36,6 +36,7 @@ const DateTimeRender: React.FC = () => {
         const dayDate = parseInt(day.date, 10);
         const isToday = dayDate === today;
         const isSelected = dayDate === selectedDate;
+        const isPast = dayDate < today;
 
         return (
           <TouchableOpacity
@@ -56,6 +57,7 @@ const DateTimeRender: React.FC = () => {
                   isToday && !isSelected && styles.todayText,
                   isSelected && styles.selectedText,
                   !isToday && !isSelected && styles.defaultText,
+                  isPast && !isSelected && {color: '#B0B7C3'},
                 ]}>
                 {day.date}
               </Text>
