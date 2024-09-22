@@ -20,7 +20,9 @@ const Chart = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={{flex: 1}}>
         <Header />
-        <DateTimeRender />
+        <View style={{paddingHorizontal: vw(5)}}>
+          <DateTimeRender />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -97,6 +99,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: vh(2),
+    borderTopWidth: 1,
+    borderTopColor: '#E4E7EC',
+    borderBottomColor: '#E4E7EC',
+    borderBottomWidth: 1,
   },
   dateofWeek: {
     color: '#1D2939',
