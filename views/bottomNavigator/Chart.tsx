@@ -84,7 +84,12 @@ const ChartRender: React.FC = () => {
           initialSpacing={25}
           xAxisColor={'transparent'}
           yAxisColor={'transparent'}
-          xAxisLabelTextStyle={{color: '#667085'}}
+          xAxisLabelTextStyle={{
+            color: '#667085',
+            fontSize: 12,
+            withDecay: '500',
+            textAlign: 'center',
+          }}
           showYAxisIndices={false}
         />
       </LinearGradient>
