@@ -10,9 +10,11 @@ import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {bookIcon, dangerIcon, safeIcon} from '../../assets/svgXml';
-import {vh, vw} from '../../services/styleSheet';
+import {centerAll, vh, vw} from '../../services/styleSheet';
 import {getWeekDays} from '../../services/renderData';
 import {TabInforChart} from '../../services/typeProps';
+import LinearGradient from 'react-native-linear-gradient';
+import {LineChart} from 'react-native-gifted-charts';
 
 const Chart = () => {
   useStatusBar('white');
@@ -45,6 +47,46 @@ const ChartView: React.FC = () => {
           color="#05603A"
         />
       </View>
+      <ChartRender />
+    </View>
+  );
+};
+
+const ChartRender: React.FC = () => {
+  const data = [
+    {value: 50, label: '00 giờ'},
+    {value: 80, label: '00 giờ'},
+    {value: 90, label: 'Mar'},
+    {value: 70, label: 'Apr'},
+    {value: 100, label: 'May'},
+  ];
+  return (
+    <View style={centerAll}>
+      <LinearGradient
+        colors={['#FFFFFF', '#D1FADF', '#FDA29B', '#FFFFFF']} // Customize your two colors here
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 1}} // To split vertically. Change to `{x: 1, y: 0}` for horizontal split.
+        style={styles.background}>
+        {/* Line Chart on top of the gradient background */}
+        <LineChart
+          curved
+          data={data}
+          width={vw(80)}
+          height={200}
+          hideRules={false}
+          rulesThickness={2} // Customize rules thickness
+          hideYAxisText={true}
+          rulesColor={'#FDA29B'} // Customize rules color
+          noOfSections={1} // Show only one rule
+          color="#3E4784" // Customize chart line color
+          hideDataPoints={true} // Show data points
+          initialSpacing={25}
+          xAxisColor={'white'}
+          yAxisColor={'transparent'}
+          xAxisLabelTextStyle={{color: '#667085'}}
+          showYAxisIndices={false}
+        />
+      </LinearGradient>
     </View>
   );
 };
@@ -188,5 +230,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: vh(2),
     paddingHorizontal: vw(5),
+  },
+  background: {
+    width: vw(90),
+    height: 200,
   },
 });
