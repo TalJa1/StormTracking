@@ -158,7 +158,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   };
 
   return (
-    <View style={[centerAll, {marginBottom: vh(8)}]}>
+    <View style={[centerAll, {marginBottom: vh(8), rowGap:vh(1)}]}>
       <View style={styles.chartTitleGrp}>
         <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
           {title}
