@@ -41,7 +41,7 @@ const Onboarding = () => {
             setFormData={setFormData}
           />
         );
-      case 0.4:
+      case 0.6:
         return (
           <GetAgeView
             setIsNext={setIsNext}
@@ -49,19 +49,9 @@ const Onboarding = () => {
             setFormData={setFormData}
           />
         );
-      case 0.6:
-        return (
-          <WelcomeView
-            setIsNext={setIsNext}
-            formData={formData}
-            setFormData={setFormData}
-          />
-        );
-      case 0.8:
-        return <WelcomeView1 setIsNext={setIsNext} />;
       case 1:
         return (
-          <WelcomeViewLast
+          <WelcomeView
             setIsNext={setIsNext}
             formData={formData}
             setFormData={setFormData}
@@ -126,56 +116,6 @@ const Onboarding = () => {
       )}
     </>
   );
-};
-
-const WelcomeViewLast: React.FC<OnboardingInterfaceProps> = ({
-  formData,
-  setFormData,
-  setIsNext,
-}) => {
-  useEffect(() => {
-    setIsNext(true);
-  }, [formData.goal, setIsNext]);
-
-  return (
-    <View style={{rowGap: vh(1.5)}}>
-      <Text style={{color: '#3E3792', fontSize: 24, fontWeight: '700'}}>
-        Tell us about
-      </Text>
-      <Text>
-        <Text style={{color: '#4C4C4C', fontSize: 20, fontWeight: '700'}}>
-          Your GOAL
-        </Text>
-        <Text style={{color: '#4C4C4C'}}> /optional</Text>
-      </Text>
-      <TextInput
-        placeholder="Type here"
-        placeholderTextColor={'#6E778B'}
-        value={formData.goal}
-        onChangeText={text => setFormData({...formData, goal: text})}
-        style={{
-          borderWidth: 1,
-          borderColor: '#CCCED5',
-          width: '100%',
-          borderRadius: 8,
-          textAlign: 'center',
-          color: '#4E5BA6',
-          fontSize: 18,
-          fontWeight: '600',
-        }}
-      />
-    </View>
-  );
-};
-
-const WelcomeView1: React.FC<{
-  setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({setIsNext}) => {
-  useEffect(() => {
-    setIsNext(true);
-  }, [setIsNext]);
-
-  return <></>;
 };
 
 const WelcomeView: React.FC<OnboardingInterfaceProps> = ({
