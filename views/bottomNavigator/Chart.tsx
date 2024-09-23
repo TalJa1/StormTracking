@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ScrollView,
@@ -56,6 +57,10 @@ const Chart = () => {
   });
 
   const handleDateChange = (dayDate: number) => {
+    if (dayDate === selectedDate) {
+      return; // If the selected date is the same as the previous one, do nothing
+    }
+
     setSelectedDate(dayDate);
     setChartData({
       apSuatKhiQuyen: getApSuatKhiQuyenData(), // Generate new data for each chart
@@ -158,7 +163,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   };
 
   return (
-    <View style={[centerAll, {marginBottom: vh(8), rowGap:vh(1)}]}>
+    <View style={[centerAll, {marginBottom: vh(8), rowGap: vh(1)}]}>
       <View style={styles.chartTitleGrp}>
         <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
           {title}
