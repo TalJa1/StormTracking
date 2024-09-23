@@ -317,8 +317,8 @@ const generateData = (average: number, range: number) => [
 ];
 
 const getApSuatKhiQuyenData = () => generateData(1100, 900); // Average atmospheric pressure in hPa
-const getTocDoGioData = () => generateData(15, 5); // Average wind speed in m/s
-const getLuongMuaData = () => generateData(50, 20); // Average rainfall in mm
+const getTocDoGioData = () => generateData(60, 40); // Average wind speed in m/s
+const getLuongMuaData = () => generateData(50, 30); // Average rainfall in mm
 const getNhietDoMatBienData = () => generateData(30, 15); // Average sea surface temperature in °C
 const getDoAmData = () => generateData(70, 40); // Average humidity in %
 
