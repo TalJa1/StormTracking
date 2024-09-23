@@ -196,13 +196,22 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
             fontSize: 12,
             withDecay: '500',
           }}
-          hideDataPoints={true} // Show data points
+          hideDataPoints={false} // Show data points
           hideRules={false}
           hideYAxisText={true}
           animateOnDataChange={true}
-          focusEnabled={true}
           showYAxisIndices={false}
+          showStripOnFocus={false}
+          showDataPointLabelOnFocus={true}
+          focusEnabled={true}
           showTextOnFocus={true}
+          showDataPointOnFocus={true}
+          unFocusOnPressOut={false}
+          onPress={(dataPoint: any, index: number) => {
+            <View key={index}>
+              <Text style={{color: 'black'}}>{dataPoint.value}</Text>
+            </View>;
+          }}
         />
       </LinearGradient>
       <PopUpComponent
