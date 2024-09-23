@@ -56,8 +56,6 @@ const Chart = () => {
     doAm: doAmData,
   });
 
-  console.log('chartData', chartData);
-
   const handleDateChange = (dayDate: number) => {
     if (dayDate === selectedDate) {
       return; // If the selected date is the same as the previous one, do nothing
@@ -149,6 +147,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   popUpData,
 }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   const getColor = () => {
     switch (colorProp) {
       case 0:
@@ -209,14 +208,9 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
           showDataPointOnFocus={true}
           unFocusOnPressOut={false}
           showTextOnFocus={true}
+          showValuesAsDataPointsText={true}
           focusedDataPointColor={'#3E4784'}
-          onFocus={(item: any, index: number) => {
-            <Text
-              style={[centerAll, {color: 'black', fontSize: 30, zIndex: 100}]}
-              key={index}>
-              {item.value.toString()}
-            </Text>;
-          }}
+          textShiftY={vh(3)}
         />
       </LinearGradient>
       <PopUpComponent
@@ -375,6 +369,7 @@ const styles = StyleSheet.create({
     width: vw(90),
     height: 200,
     borderRadius: 20,
+    zIndex: 0,
   },
   dashedLine: {
     position: 'absolute',
