@@ -53,7 +53,7 @@ const StepLoader: React.FC<{
       <Progress.Bar
         progress={step}
         borderWidth={0}
-        color="#3E3792"
+        color="#293056"
         unfilledColor="#CCCED5"
         width={vw(90)}
       />
@@ -67,7 +67,9 @@ const StepLoader: React.FC<{
             styles.circleButton,
             step === 0.2 && {backgroundColor: '#CCCED5'},
           ]}>
-          <Text style={styles.buttonText}>{backIcon(vw(6), vw(6))}</Text>
+          <Text style={styles.buttonText}>
+            {backIcon(vw(7), vw(7), 'white')}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           disabled={isNext === false ? true : false}
@@ -83,7 +85,9 @@ const StepLoader: React.FC<{
             styles.circleButton,
             isNext === false && {backgroundColor: '#CCCED5'},
           ]}>
-          <Text style={styles.buttonText}>{nextIcon(vw(6), vw(6))}</Text>
+          <Text style={styles.buttonText}>
+            {nextIcon(vw(7), vw(7), 'white')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 10,
-    color: '#3E3792',
+    color: '#293056',
   },
   description: {
     fontSize: 16,
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#D5CFF9',
+    backgroundColor: '#4E5BA6',
     justifyContent: 'center',
     alignItems: 'center',
   },

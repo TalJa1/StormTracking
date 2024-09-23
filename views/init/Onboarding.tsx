@@ -159,9 +159,9 @@ const WelcomeViewLast: React.FC<OnboardingInterfaceProps> = ({
           width: '100%',
           borderRadius: 8,
           textAlign: 'center',
-          color: '#3E3792',
+          color: '#4E5BA6',
           fontSize: 18,
-          fontWeight: '700',
+          fontWeight: '600',
         }}
       />
     </View>
@@ -266,7 +266,7 @@ const GetAgeView: React.FC<OnboardingInterfaceProps> = ({
 
   return (
     <View style={[centerAll, {rowGap: vh(2)}]}>
-      <Text style={{color: '#3E3792', fontWeight: '700', fontSize: 24}}>
+      <Text style={{color: '#1D2939', fontWeight: '700', fontSize: 24}}>
         Your Age
       </Text>
       <TextInput
@@ -305,7 +305,7 @@ const GetNameView: React.FC<OnboardingInterfaceProps> = ({
 
   return (
     <View style={[centerAll, {rowGap: vh(2)}]}>
-      <Text style={{color: '#3E3792', fontWeight: '700', fontSize: 24}}>
+      <Text style={{color: '#1D2939', fontWeight: '700', fontSize: 24}}>
         Your name
       </Text>
       <TextInput
