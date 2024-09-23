@@ -204,14 +204,10 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
           showStripOnFocus={false}
           showDataPointLabelOnFocus={true}
           focusEnabled={true}
-          showTextOnFocus={true}
           showDataPointOnFocus={true}
           unFocusOnPressOut={false}
-          onPress={(dataPoint: any, index: number) => {
-            <View key={index}>
-              <Text style={{color: 'black'}}>{dataPoint.value}</Text>
-            </View>;
-          }}
+          showTextOnFocus={true}
+          focusedDataPointColor={'#3E4784'}
         />
       </LinearGradient>
       <PopUpComponent
