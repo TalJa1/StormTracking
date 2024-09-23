@@ -178,6 +178,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
         {/* Line Chart on top of the gradient background */}
         <LineChart
           data={data}
+          animateOnDataChange={true}
           curved
           width={vw(80)}
           hideDataPoints
