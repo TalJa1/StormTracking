@@ -71,9 +71,31 @@ export interface ChartPopUpInterface {
   popUpData: ChartPopUpItemInterface;
 }
 
+export interface OnboardingComponentProps {
+  title: string;
+  description?: string | null;
+  step: number;
+  setStep: (newStep: number) => void;
+  ui: React.ReactNode;
+  isNext: boolean;
+}
+
 export interface LoginBtnProps {
   btnColor: string;
   textColor: string;
   title: string;
   icon?: JSX.Element;
+}
+
+export interface OnboardingInterfaceProps {
+  setIsNext: React.Dispatch<React.SetStateAction<boolean>>;
+  formData: {name: string; age: string; goal: string; location: string};
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      age: string;
+      goal: string;
+      location: string;
+    }>
+  >;
 }
