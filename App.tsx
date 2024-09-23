@@ -11,6 +11,7 @@ import Home from './views/bottomNavigator/Home';
 import Chart from './views/bottomNavigator/Chart';
 import Setting from './views/bottomNavigator/Setting';
 import ListLocation from './views/home/ListLocation';
+import Login from './views/init/Login';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,11 @@ const App = () => {
         <Stack.Screen
           name="ListLocation"
           component={ListLocation}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="Login"
+          component={Login}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

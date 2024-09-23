@@ -70,3 +70,10 @@ export interface ChartPopUpInterface {
   onClose: () => void;
   popUpData: ChartPopUpItemInterface;
 }
+
+export interface LoginBtnProps {
+  btnColor: string;
+  textColor: string;
+  title: string;
+  icon?: JSX.Element;
+}
