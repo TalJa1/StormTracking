@@ -316,7 +316,7 @@ const generateData = (average: number, range: number) => [
   {value: generateRandomValue(average, range), label: '12 giờ'},
 ];
 
-const getApSuatKhiQuyenData = () => generateData(1100, 900); // Average atmospheric pressure in hPa
+const getApSuatKhiQuyenData = () => generateData(1100, 1000); // Average atmospheric pressure in hPa
 const getTocDoGioData = () => generateData(60, 40); // Average wind speed in m/s
 const getLuongMuaData = () => generateData(50, 30); // Average rainfall in mm
 const getNhietDoMatBienData = () => generateData(30, 15); // Average sea surface temperature in °C
