@@ -56,6 +56,8 @@ const Chart = () => {
     doAm: doAmData,
   });
 
+  console.log('chartData', chartData);
+
   const handleDateChange = (dayDate: number) => {
     if (dayDate === selectedDate) {
       return; // If the selected date is the same as the previous one, do nothing
@@ -208,6 +210,13 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
           unFocusOnPressOut={false}
           showTextOnFocus={true}
           focusedDataPointColor={'#3E4784'}
+          onFocus={(item: any, index: number) => {
+            <Text
+              style={[centerAll, {color: 'black', fontSize: 30, zIndex: 100}]}
+              key={index}>
+              {item.value.toString()}
+            </Text>;
+          }}
         />
       </LinearGradient>
       <PopUpComponent

@@ -303,7 +303,8 @@ export function getWeekDays(): {dayOfWeek: string; date: string}[] {
 const generateRandomValue = (average: number, range: number) => {
   const min = average - range;
   const max = average + range;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomValue;
 };
 
 const generateData = (average: number, range: number) => [
@@ -316,11 +317,11 @@ const generateData = (average: number, range: number) => [
   {value: generateRandomValue(average, range), label: '12 giờ'},
 ];
 
-const getApSuatKhiQuyenData = () => generateData(1100, 1000); // Average atmospheric pressure in hPa
-const getTocDoGioData = () => generateData(60, 40); // Average wind speed in m/s
-const getLuongMuaData = () => generateData(50, 30); // Average rainfall in mm
-const getNhietDoMatBienData = () => generateData(30, 15); // Average sea surface temperature in °C
-const getDoAmData = () => generateData(70, 40); // Average humidity in %
+const getApSuatKhiQuyenData = () => generateData(800, 500); // Average atmospheric pressure in hPa
+const getTocDoGioData = () => generateData(40, 30); // Average wind speed in m/s
+const getLuongMuaData = () => generateData(40, 20); // Average rainfall in mm
+const getNhietDoMatBienData = () => generateData(20, 15); // Average sea surface temperature in °C
+const getDoAmData = () => generateData(60, 20); // Average humidity in %
 
 export {
   getApSuatKhiQuyenData,
