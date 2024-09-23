@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ScrollView,
@@ -7,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {
@@ -70,10 +69,6 @@ const Chart = () => {
       doAm: getDoAmData(),
     });
   };
-
-  useEffect(() => {
-    handleDateChange(selectedDate);
-  }, [selectedDate]);
 
   return (
     <SafeAreaView style={styles.container}>
