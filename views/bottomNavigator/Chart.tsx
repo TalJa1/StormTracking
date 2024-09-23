@@ -205,6 +205,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
             pointerStripColor: '#3E4784',
             pointerStripWidth: 2,
             pointerColor: '#3E4784',
+            strokeDashArray: [2, 5],
             radius: 6,
             pointerLabelWidth: 100,
             pointerLabelHeight: 90,
