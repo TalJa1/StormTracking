@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ScrollView,
@@ -176,36 +177,70 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
         <View style={styles.dashedLine} />
         {/* Line Chart on top of the gradient background */}
         <LineChart
-          curved
           data={data}
+          curved
           width={vw(80)}
-          height={200}
-          rulesThickness={2} // Customize rules thickness
-          rulesColor={'#FDA29B'} // Customize rules color
-          hideAxesAndRules
-          color="#3E4784" // Customize chart line color
-          initialSpacing={25}
+          hideDataPoints
+          color="#3E4784"
+          thickness={2}
+          hideRules
+          startFillColor="rgba(20,105,81,0.3)"
+          endFillColor="rgba(20,85,81,0.01)"
+          startOpacity={0.9}
+          endOpacity={0.2}
+          initialSpacing={50}
+          endSpacing={50}
+          noOfSections={6}
+          hideYAxisText
+          yAxisThickness={0}
           xAxisColor={'transparent'}
-          yAxisColor={'transparent'}
+          showXAxisIndices={false}
           xAxisLabelTextStyle={{
             color: '#667085',
             fontSize: 12,
             withDecay: '500',
           }}
-          hideDataPoints={false} // Show data points
-          hideRules={false}
-          hideYAxisText={true}
-          animateOnDataChange={true}
-          showYAxisIndices={false}
-          showStripOnFocus={false}
-          showDataPointLabelOnFocus={true}
-          focusEnabled={true}
-          showDataPointOnFocus={true}
-          unFocusOnPressOut={false}
-          showTextOnFocus={true}
-          showValuesAsDataPointsText={true}
-          focusedDataPointColor={'#3E4784'}
-          textShiftY={vh(3)}
+          pointerConfig={{
+            pointerStripHeight: 160,
+            pointerStripColor: '#3E4784',
+            pointerStripWidth: 2,
+            pointerColor: '#3E4784',
+            radius: 6,
+            pointerLabelWidth: 100,
+            pointerLabelHeight: 90,
+            activatePointersOnLongPress: true,
+            autoAdjustPointerLabelPosition: false,
+            pointerLabelComponent: (items: any) => {
+              return (
+                <View
+                  style={{
+                    height: 90,
+                    width: 100,
+                    justifyContent: 'center',
+                    // marginTop: -30,
+                    marginLeft: -40,
+                  }}>
+                  <View
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 6,
+                      borderRadius: 10,
+                      backgroundColor: 'white',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#667085',
+                        fontWeight: '400',
+                        fontSize: 12,
+                        textAlign: 'center',
+                      }}>
+                      {'$' + items[0].value}
+                    </Text>
+                  </View>
+                </View>
+              );
+            },
+          }}
         />
       </LinearGradient>
       <PopUpComponent
