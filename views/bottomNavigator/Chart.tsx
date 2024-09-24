@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import {
   ScrollView,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useStatusBar from '../../services/useStatusBarCustom';
 import {
@@ -56,6 +57,10 @@ const Chart = () => {
   });
 
   const handleDateChange = (dayDate: number) => {
+    if (dayDate === selectedDate) {
+      return; // If the selected date is the same as the previous one, do nothing
+    }
+
     setSelectedDate(dayDate);
     setChartData({
       apSuatKhiQuyen: getApSuatKhiQuyenData(), // Generate new data for each chart
@@ -65,10 +70,6 @@ const Chart = () => {
       doAm: getDoAmData(),
     });
   };
-
-  useEffect(() => {
-    handleDateChange(selectedDate);
-  }, [selectedDate]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -142,6 +143,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   popUpData,
 }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   const getColor = () => {
     switch (colorProp) {
       case 0:
@@ -157,8 +159,25 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
     setIsPopupVisible(!isPopupVisible);
   };
 
+  const customValueRender = (value: number) => {
+    switch (title) {
+      case 'Áp suất khí quyển':
+        return `${value}hPa`;
+      case 'Tốc độ gió':
+        return `~${value}km/h`;
+      case 'Lượng mưa':
+        return `~${value}mm`;
+      case 'Nhiệt độ mặt biển':
+        return `~${value}°C`;
+      case 'Độ ẩm':
+        return `${value}%`;
+      default:
+        return value;
+    }
+  };
+
   return (
-    <View style={[centerAll, {marginBottom: vh(8)}]}>
+    <View style={[centerAll, {marginBottom: vh(8), rowGap: vh(1)}]}>
       <View style={styles.chartTitleGrp}>
         <Text style={{color: '#344054', fontSize: 16, fontWeight: '600'}}>
           {title}
@@ -175,29 +194,71 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
         <View style={styles.dashedLine} />
         {/* Line Chart on top of the gradient background */}
         <LineChart
-          curved
           data={data}
+          animateOnDataChange={true}
+          curved
           width={vw(80)}
-          height={200}
-          rulesThickness={2} // Customize rules thickness
-          rulesColor={'#FDA29B'} // Customize rules color
-          hideAxesAndRules
-          color="#3E4784" // Customize chart line color
-          initialSpacing={25}
+          hideDataPoints
+          color="#3E4784"
+          thickness={2}
+          hideRules
+          startFillColor="rgba(20,105,81,0.3)"
+          endFillColor="rgba(20,85,81,0.01)"
+          startOpacity={0.9}
+          endOpacity={0.2}
+          initialSpacing={50}
+          endSpacing={50}
+          noOfSections={6}
+          hideYAxisText
+          yAxisThickness={0}
           xAxisColor={'transparent'}
-          yAxisColor={'transparent'}
+          showXAxisIndices={false}
           xAxisLabelTextStyle={{
             color: '#667085',
             fontSize: 12,
             withDecay: '500',
           }}
-          hideDataPoints={true} // Show data points
-          hideRules={false}
-          hideYAxisText={true}
-          animateOnDataChange={true}
-          focusEnabled={true}
-          showYAxisIndices={false}
-          showTextOnFocus={true}
+          pointerConfig={{
+            pointerStripHeight: 160,
+            pointerStripColor: '#3E4784',
+            pointerStripWidth: 2,
+            pointerColor: '#3E4784',
+            strokeDashArray: [2, 5],
+            radius: 6,
+            pointerLabelWidth: 100,
+            pointerLabelHeight: 90,
+            activatePointersOnLongPress: true,
+            autoAdjustPointerLabelPosition: false,
+            pointerLabelComponent: (items: any) => {
+              return (
+                <View
+                  style={{
+                    height: 90,
+                    width: 100,
+                    justifyContent: 'center',
+                    marginLeft: -40,
+                  }}>
+                  <View
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 6,
+                      borderRadius: 10,
+                      backgroundColor: 'white',
+                    }}>
+                    <Text
+                      style={{
+                        color: '#667085',
+                        fontWeight: '400',
+                        fontSize: 12,
+                        textAlign: 'center',
+                      }}>
+                      {customValueRender(items[0].value)}
+                    </Text>
+                  </View>
+                </View>
+              );
+            },
+          }}
         />
       </LinearGradient>
       <PopUpComponent
@@ -356,6 +417,7 @@ const styles = StyleSheet.create({
     width: vw(90),
     height: 200,
     borderRadius: 20,
+    zIndex: 0,
   },
   dashedLine: {
     position: 'absolute',
