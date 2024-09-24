@@ -59,7 +59,7 @@ const StepLoader: React.FC<{
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          disabled={step === 0.2}
+          disabled={step === 0.3}
           onPress={() => {
             step === 1
               ? setStep(parseFloat((step - 0.4).toFixed(1)))
@@ -67,7 +67,7 @@ const StepLoader: React.FC<{
           }}
           style={[
             styles.circleButton,
-            step === 0.2 && {backgroundColor: '#CCCED5'},
+            step === 0.3 && {backgroundColor: '#CCCED5'},
           ]}>
           <Text style={styles.buttonText}>
             {backIcon(vw(7), vw(7), 'white')}
