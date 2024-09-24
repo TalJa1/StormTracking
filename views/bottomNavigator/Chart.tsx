@@ -159,6 +159,23 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
     setIsPopupVisible(!isPopupVisible);
   };
 
+  const customValueRender = (value: number) => {
+    switch (title) {
+      case 'Áp suất khí quyển':
+        return `${value} hPa`;
+      case 'Tốc độ gió':
+        return `~${value} km/h`;
+      case 'Lượng mưa':
+        return `~${value} mm`;
+      case 'Nhiệt độ mặt biển':
+        return `~${value} °C`;
+      case 'Độ ẩm':
+        return `${value}%`;
+      default:
+        return value;
+    }
+  };
+
   return (
     <View style={[centerAll, {marginBottom: vh(8), rowGap: vh(1)}]}>
       <View style={styles.chartTitleGrp}>
@@ -219,7 +236,6 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
                     height: 90,
                     width: 100,
                     justifyContent: 'center',
-                    // marginTop: -30,
                     marginLeft: -40,
                   }}>
                   <View
@@ -236,7 +252,7 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
                         fontSize: 12,
                         textAlign: 'center',
                       }}>
-                      {'$' + items[0].value}
+                      {customValueRender(items[0].value)}
                     </Text>
                   </View>
                 </View>
