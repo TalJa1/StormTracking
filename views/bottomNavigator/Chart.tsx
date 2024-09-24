@@ -162,13 +162,13 @@ const ChartRender: React.FC<ChartRenderInterface> = ({
   const customValueRender = (value: number) => {
     switch (title) {
       case 'Áp suất khí quyển':
-        return `${value} hPa`;
+        return `${value}hPa`;
       case 'Tốc độ gió':
-        return `~${value} km/h`;
+        return `~${value}km/h`;
       case 'Lượng mưa':
-        return `~${value} mm`;
+        return `~${value}mm`;
       case 'Nhiệt độ mặt biển':
-        return `~${value} °C`;
+        return `~${value}°C`;
       case 'Độ ẩm':
         return `${value}%`;
       default:
