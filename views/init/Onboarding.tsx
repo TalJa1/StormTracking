@@ -18,7 +18,7 @@ import {saveData} from '../../services/storage';
 
 const Onboarding = () => {
   const [isBoarding, setIsBoarding] = useState(false);
-  const [step, setStep] = useState(0.2);
+  const [step, setStep] = useState(0.3);
   const [isNext, setIsNext] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -33,7 +33,7 @@ const Onboarding = () => {
 
   const getStepComponent = (): React.ReactNode => {
     switch (step) {
-      case 0.2:
+      case 0.3:
         return (
           <GetNameView
             setIsNext={setIsNext}
@@ -99,17 +99,11 @@ const Onboarding = () => {
           setStep={setStep}
           step={step}
           title={
-            step < 0.5
+            step < 0.7
               ? "Before jumping in, let's know each orther"
               : `Welcome ${formData.name}`
           }
-          description={
-            step === 0.6
-              ? 'Choose a location to start'
-              : step === 0.8 || step === 1
-              ? 'Just a few steps to personalize your experience'
-              : null
-          }
+          description={step === 1 ? 'Choose a location to start' : null}
           ui={getStepComponent()}
           isNext={isNext}
         />
