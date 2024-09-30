@@ -100,7 +100,7 @@ const MapRender: React.FC<MapInterface> = ({
   maxIndex,
   setRenderIndex,
 }) => {
-  const animatedHeight = useRef(new Animated.Value(vh(23))).current;
+  const animatedHeight = useRef(new Animated.Value(160)).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -116,7 +116,7 @@ const MapRender: React.FC<MapInterface> = ({
         } else {
           // Sliding up
           Animated.timing(animatedHeight, {
-            toValue: vh(23),
+            toValue: 160,
             duration: 300,
             useNativeDriver: false,
           }).start();

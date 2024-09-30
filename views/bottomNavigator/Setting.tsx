@@ -113,6 +113,7 @@ const Setting = () => {
           <RenderLayout title="Trung tâm trợ giúp" renderData={HelpCenter} />
           <RenderLayout title="Thông tin khác" renderData={OtherInfor} />
         </View>
+        <View style={{height: vh(9)}} />
       </ScrollView>
     </SafeAreaView>
   );
