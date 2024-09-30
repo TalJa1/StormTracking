@@ -48,8 +48,8 @@ export const AdditionLocaiton = [
     name: 'Yên Bái',
     description: 'Mưa rải rác',
     temperature: 24,
-    long: 106.660172,
-    lad: 10.762622,
+    long: 104.871,
+    lad: 21.722,
   },
   {
     name: 'Lạng Sơn',
